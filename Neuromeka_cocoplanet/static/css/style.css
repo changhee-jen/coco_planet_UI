@@ -1,0 +1,149 @@
+body,
+.order-status,
+.processing,
+.pickup-item .menu {
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+}
+
+/* 픽업 보드 전체 */
+.pickup-board {
+    display: flex;
+    align-items: stretch;
+    border: 2px solid #333;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.pickup-title {
+    background: #333;
+    color: #fff;
+    padding: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    text-orientation: upright;
+    letter-spacing: 8px;
+}
+
+.pickup-grid {
+    display: flex;
+    flex: 1;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+}
+
+.pickup-item table {
+    border-collapse: collapse;
+    width: 200px;
+    height: 100%;
+}
+
+.pickup-item table td {
+    width: 105px;
+    height: 50%;
+    border: 1px solid #333;
+    border-radius: 8px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.pickup-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.pickup-icon {
+    margin-top: 20px;
+    width: 50px;
+    height: auto;
+    margin-bottom: 0px;
+}
+
+.order-no {
+    font-weight: bold;
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.menu {
+    font-size: 14px;
+    text-align: center;
+    word-break: keep-all;
+    max-width: 100%;
+    flex-shrink: 0;   
+}
+
+.pickup-item {
+    height: 100%;
+/* border: 1px solid #aaa;*/
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 20px;
+}
+
+#footer-img {
+    height: 150px;
+    object-fit: contain;
+}
+
+/* Order Status 보드 */
+.status-board {
+    display: flex;
+    border: 2px solid #333;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 500px;
+    height: 150px;
+}
+
+#pickup-title {
+    padding: 10px;
+    min-width: 80px;
+    font-size: 28px;
+}
+
+.status-title {
+    background: #333;
+    color: #fff;
+    padding: 5px;
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: center;
+    align-items: flex-start;
+    min-width: 120px;
+}
+
+.status-content {
+    flex: 1;
+    background: #fff;
+    padding: 15px;
+}
+
+.status-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.status-content li {
+    font-size: 16px;
+    margin-bottom: 8px;
+}

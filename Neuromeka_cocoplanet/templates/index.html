@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CoCoPlanet-Board</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <script defer src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <!-- Pick-Up Zone -->
+        <div class="pickup-board">
+            <div class="status-title" id="pickup-title">
+                Pick<br>Up
+            </div>
+
+           <div class="pickup-grid">
+    <div class="pickup-item" id="table1">
+        <table>
+            <tr>
+                <td id="pick-1"></td>
+                <td id="pick-2"></td>
+            </tr>
+            <tr>
+                <td id="pick-3"></td>
+                <td id="pick-4"></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="pickup-item" id="table2">
+        <table>
+            <tr>
+                <td id="pick-5"></td>
+                <td id="pick-6"></td>
+            </tr>
+            <tr>
+                <td id="pick-7"></td>
+                <td id="pick-8"></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="pickup-item" id="table3">
+        <table>
+            <tr>
+                <td id="pick-9"></td>
+                <td id="pick-10"></td>
+            </tr>
+            <tr>
+                <td id="pick-11"></td>
+                <td id="pick-12"></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="pickup-item" id="table4">
+        <table>
+            <tr>
+                <td id="pick-13"></td>
+                <td id="pick-14"></td>
+            </tr>
+            <tr>
+                <td id="pick-15"></td>
+                <td id="pick-16"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+        </div>
+
+        <div class="footer">
+            <div class="img-container">
+                <img id="footer-img" src="{{ url_for('static', filename='images/ic_catlogo.png') }}" alt="Logo"
+                    class="logo">
+            </div>
+            <div class="status-board">
+    <div class="status-title">Order<br>Status</div>
+    <div class="status-content">
+        <ul id="order-status-list"></ul>
+    </div>
+</div>
+
+<div class="status-board">
+     <div class="status-title">Processing</div>
+      <div class="status-content">
+       <p id="processing"></p>
+    </div>
+</div>
+
+        </div>
+    </div>
+</body>
+
+</html>
