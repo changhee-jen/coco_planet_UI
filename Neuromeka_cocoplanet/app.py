@@ -42,11 +42,11 @@ def setup_channel():
 
 def parse_grpc_data(grpc_json: dict):
     pickup_list = []
-    order_status = [] 
+    order_status = []
     processing = {"order_no": "-", "menu": "-"}
 
-    # waiting_orders → pickup_list
-    for oid, order in grpc_json.get("waiting_orders", {}).items():
+    # 🔹 pickup_waiting_orders → pickup_list
+    for oid, order in grpc_json.get("pickup_waiting_orders", {}).items():
         order_no = order["barcode"][-4:]
         menu = order["recipe"]
         sensor = order.get("sensor", "")
@@ -58,7 +58,7 @@ def parse_grpc_data(grpc_json: dict):
             "menu": menu
         })
 
-    # working_orders → processing
+    # 🔹 working_orders → processing
     for oid, order in grpc_json.get("working_orders", {}).items():
         order_no = order["barcode"][-4:]
         menu = order["recipe"]
@@ -66,6 +66,15 @@ def parse_grpc_data(grpc_json: dict):
             "order_no": order_no,
             "menu": menu
         }
+
+    # 🔹 pre_orders → order_status
+    for oid, order in grpc_json.get("pre_orders", {}).items():
+        order_no = order["barcode"][-4:]
+        menu = order["recipe"]
+        order_status.append({
+            "order_no": order_no,
+            "menu": menu
+        })
 
     return {
         "pickup_list": pickup_list,
