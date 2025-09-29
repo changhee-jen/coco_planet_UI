@@ -7,11 +7,10 @@ body,
 
 body {
     margin: 0;
-    padding: 20px;
 }
-
-/* 픽업 보드 전체 */
+.container{padding: 20px;}
 .pickup-board {
+    height: 500px;
     display: flex;
     align-items: stretch;
     border: 2px solid #333;
@@ -39,12 +38,12 @@ body {
 
 .pickup-item table {
     border-collapse: collapse;
-    width: 200px;
+    width: 300px;
     height: 100%;
 }
 
 .pickup-item table td {
-    width: 105px;
+    width: 150px;
     height: 50%;
     border: 1px solid #333;
     border-radius: 8px;
@@ -62,20 +61,20 @@ body {
 }
 
 .pickup-icon {
-    margin-top: 20px;
-    width: 50px;
+    margin-top: 30px;
+    width: 65px;
     height: auto;
     margin-bottom: 0px;
 }
 
 .order-no {
     font-weight: bold;
-    font-size: 16px;
+    font-size: 32px;
     margin: 5px 0;
 }
 
 .menu {
-    font-size: 14px;
+    font-size: 21px;
     text-align: center;
     word-break: keep-all;
     max-width: 100%;
@@ -97,31 +96,30 @@ body {
 }
 
 #footer-img {
-    height: 150px;
+    height: 250px;
     object-fit: contain;
 }
 
-/* Order Status 보드 */
 .status-board {
     display: flex;
     border: 2px solid #333;
     border-radius: 8px;
     overflow: hidden;
-    width: 500px;
-    height: 150px;
+    width: 600px;
+    height: 250px;
 }
 
 #pickup-title {
     padding: 10px;
     min-width: 80px;
-    font-size: 28px;
+    font-size: 32px;
 }
 
 .status-title {
     background: #333;
     color: #fff;
     padding: 5px;
-    font-size: 20px;
+    font-size: 28px;
     font-weight: bold;
     display: flex;
     flex-direction: column;
@@ -144,6 +142,35 @@ body {
 }
 
 .status-content li {
-    font-size: 16px;
+    font-size: 24px;
     margin-bottom: 8px;
+}
+
+
+#processing {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+/* slideshow */
+#slideshow {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#slideshow img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0; left: 0;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+#slideshow img.active {
+    opacity: 1;
+    z-index: 1;
 }

@@ -1,16 +1,32 @@
 function fetchStatus() {
     fetch("/api/status")
-        .then(response => response.json())
-        .then(data => {
-            updateOrderStatus(data.order_status);
-            updateProcessing(data.processing);
-            renderPickup(data.pickup_list);
+        .then(response => {
+            if (!response.ok) throw new Error("서버 응답 없음");
+            return response.json();
         })
-        .catch(err => console.error("Error fetching status:", err));
+        .then(data => {
+            if (data.pickup_list && data.pickup_list.length > 0) {
+                // 데이터 있음 → 메인 UI 보여주기
+                showMainUI();
+                console.log(data);
+                updateOrderStatus(data.order_status);
+                updateProcessing(data.processing);
+                renderPickup(data.pickup_list);
+            } else {
+                // 데이터 없음 → 슬라이드쇼
+                showSlideshow();
+            }
+        })
+        .catch(err => {
+            console.error("Error fetching status:", err);
+            // 통신 실패 → 슬라이드쇼
+            showSlideshow();
+        });
 }
+
 function updateOrderStatus(orderStatus) {
     const orderStatusList = document.getElementById("order-status-list");
-    orderStatusList.innerHTML = ""; // 초기화
+    orderStatusList.innerHTML = "";
 
     orderStatus.slice(0, 3).forEach(item => {
         const li = document.createElement("li");
@@ -24,9 +40,9 @@ function updateOrderStatus(orderStatus) {
         orderStatusList.appendChild(li);
     }
 }
+
 function updateProcessing(processing) {
     const processingEl = document.getElementById("processing");
-
     if (!processing || !processing.order_no || processing.order_no === "-") {
         processingEl.textContent = "";
     } else {
@@ -37,9 +53,7 @@ function updateProcessing(processing) {
 function renderPickup(pickupList) {
     for (let i = 1; i <= 16; i++) {
         const cell = document.getElementById(`pick-${i}`);
-        if (cell) {
-            cell.innerHTML = ""; 
-        }
+        if (cell) cell.innerHTML = "";
     }
 
     pickupList.forEach(item => {
@@ -58,8 +72,70 @@ function renderPickup(pickupList) {
     });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    fetchStatus();
-    setInterval(fetchStatus, 500); 
+// ===== UI 전환 =====
+let currentView = "slideshow"; 
 
+function showMainUI() {
+    if (currentView === "main") return;
+    currentView = "main";
+
+    const slideshow = document.getElementById("slideshow");
+    const mainUI = document.getElementById("main-ui");
+
+    slideshow.style.transition = "opacity 1s ease-in-out";
+    slideshow.style.opacity = 0;
+
+    setTimeout(() => {
+        slideshow.style.display = "none";
+        mainUI.style.display = "block";
+        mainUI.style.opacity = 0;
+
+        setTimeout(() => {
+            mainUI.style.transition = "opacity 1.5s ease-in-out";
+            mainUI.style.opacity = 1;
+        }, 50);
+    }, 1000);
+}
+
+function showSlideshow() {
+    if (currentView === "slideshow") return;
+    currentView = "slideshow";
+
+    const slideshow = document.getElementById("slideshow");
+    const mainUI = document.getElementById("main-ui");
+
+    mainUI.style.transition = "opacity 1s ease-in-out";
+    mainUI.style.opacity = 0;
+
+    setTimeout(() => {
+        mainUI.style.display = "none";
+        slideshow.style.display = "block";
+        slideshow.style.opacity = 0;
+
+        setTimeout(() => {
+            slideshow.style.transition = "opacity 1.5s ease-in-out";
+            slideshow.style.opacity = 1;
+        }, 50);
+    }, 1000);
+}
+
+// ===== 슬라이드쇼 순환 =====
+function startSlideshow() {
+    let slides = document.querySelectorAll("#slideshow img");
+    let current = 0;
+
+    function showSlide() {
+        slides[current].classList.remove("active");
+        current = (current + 1) % slides.length;
+        slides[current].classList.add("active");
+    }
+    setInterval(showSlide, 4000);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("main-ui").style.display = "none"; //
+    startSlideshow();
+
+    fetchStatus();
+    setInterval(fetchStatus, 1000);
 });

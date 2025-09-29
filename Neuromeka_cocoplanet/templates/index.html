@@ -11,8 +11,13 @@
 </head>
 
 <body>
-    <div class="container">
-        <!-- Pick-Up Zone -->
+    <div id="slideshow">
+        <img src="{{ url_for('static', filename='images/wait1.png') }}" class="active">
+        <img src="{{ url_for('static', filename='images/wait2.png') }}">
+        <img src="{{ url_for('static', filename='images/wait3.png') }}">
+    </div>
+
+    <div class="container" id="main-ui" style="display: none;">
         <div class="pickup-board">
             <div class="status-title" id="pickup-title">
                 Pick<br>Up
@@ -22,12 +27,12 @@
     <div class="pickup-item" id="table1">
         <table>
             <tr>
-                <td id="pick-1"></td>
-                <td id="pick-2"></td>
+                <td id="pick-16"></td>
+                <td id="pick-15"></td>
             </tr>
             <tr>
-                <td id="pick-3"></td>
-                <td id="pick-4"></td>
+                <td id="pick-14"></td>
+                <td id="pick-13"></td>
             </tr>
         </table>
     </div>
@@ -35,12 +40,12 @@
     <div class="pickup-item" id="table2">
         <table>
             <tr>
-                <td id="pick-5"></td>
-                <td id="pick-6"></td>
+                <td id="pick-12"></td>
+                <td id="pick-11"></td>
             </tr>
             <tr>
-                <td id="pick-7"></td>
-                <td id="pick-8"></td>
+                <td id="pick-10"></td>
+                <td id="pick-9"></td>
             </tr>
         </table>
     </div>
@@ -48,12 +53,12 @@
     <div class="pickup-item" id="table3">
         <table>
             <tr>
-                <td id="pick-9"></td>
-                <td id="pick-10"></td>
+                <td id="pick-8"></td>
+                <td id="pick-7"></td>
             </tr>
             <tr>
-                <td id="pick-11"></td>
-                <td id="pick-12"></td>
+                <td id="pick-6"></td>
+                <td id="pick-5"></td>
             </tr>
         </table>
     </div>
@@ -61,12 +66,12 @@
     <div class="pickup-item" id="table4">
         <table>
             <tr>
-                <td id="pick-13"></td>
-                <td id="pick-14"></td>
+                <td id="pick-4"></td>
+                <td id="pick-3"></td>
             </tr>
             <tr>
-                <td id="pick-15"></td>
-                <td id="pick-16"></td>
+                <td id="pick-2"></td>
+                <td id="pick-1"></td>
             </tr>
         </table>
     </div>
@@ -89,7 +94,7 @@
 <div class="status-board">
      <div class="status-title">Processing</div>
       <div class="status-content">
-       <p id="processing"></p>
+       <div id="processing"></div>
     </div>
 </div>
 
