@@ -5,7 +5,7 @@ function fetchStatus() {
             return response.json();
         })
         .then(data => {
-            if (data.pickup_list && data.pickup_list.length && data.processing.length > 0) {
+            if (data.pickup_list && data.pickup_list.length && data.processing.length &&data.order_status.length > 0) {
                 // 데이터 있음 → 메인 UI 보여주기
                 showMainUI();
                 console.log(data);
