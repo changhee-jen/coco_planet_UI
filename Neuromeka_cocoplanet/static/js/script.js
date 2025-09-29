@@ -129,16 +129,37 @@ function showSlideshow() {
 
 // ===== 슬라이드쇼 순환 =====
 function startSlideshow() {
-    let slides = document.querySelectorAll("#slideshow img");
+    let slides = document.querySelectorAll("#slideshow img, #slideshow video");
     let current = 0;
 
     function showSlide() {
         slides[current].classList.remove("active");
+        if (slides[current].tagName === "VIDEO") {
+            slides[current].pause();
+            slides[current].currentTime = 0;
+        }
+
         current = (current + 1) % slides.length;
         slides[current].classList.add("active");
+
+        if (slides[current].tagName === "VIDEO") {
+            slides[current].play();
+            setTimeout(showSlide, (slides[current].duration || 5) * 1000);
+        } else {
+            setTimeout(showSlide, 4000);
+        }
     }
-    setInterval(showSlide, 4000);
+
+    // 첫 슬라이드 시작
+    slides[current].classList.add("active");
+    if (slides[current].tagName === "VIDEO") {
+        slides[current].play();
+        setTimeout(showSlide, (slides[current].duration || 5) * 1000);
+    } else {
+        setTimeout(showSlide, 4000);
+    }
 }
+
 
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("main-ui").style.display = "none"; //
