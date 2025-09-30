@@ -40,7 +40,6 @@ function fetchStatus() {
         });
 }
 
-
 function updateProcessing(processingList) {
     const container = document.getElementById("processing-content");
     container.innerHTML = "";
@@ -50,10 +49,10 @@ function updateProcessing(processingList) {
         return;
     }
 
-    // 리스트에 Ice cream 포함 여부 확인
-    const hasIceCream = processingList.some(proc => proc.menu === "Ice cream");
+    const hasIceCream = processingList.some(proc => 
+        proc.menu && proc.menu.toLowerCase() === "ice cream"
+    );
 
-    // Ice cream 있으면 2개, 아니면 1개
     const displayList = hasIceCream
         ? processingList.slice(0, 2)
         : processingList.slice(0, 1);
