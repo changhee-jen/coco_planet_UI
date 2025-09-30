@@ -1,9 +1,9 @@
 function hasValidData(data) {
-    return (
-        (data.pickup_list && data.pickup_list.length > 0) ||
-        (data.order_status && data.order_status.length > 0) ||
-        (data.processing && data.processing.length > 0)
-    );
+    const hasPickup = Array.isArray(data.pickup_list) && data.pickup_list.length > 0;
+    const hasOrder = Array.isArray(data.order_status) && data.order_status.length > 0;
+    const hasProc = Array.isArray(data.processing) && data.processing.length > 0;
+
+    return hasPickup || hasOrder || hasProc;
 }
 
 
@@ -17,15 +17,23 @@ function fetchStatus() {
             return response.json();
         })
         .then(data => {
+            console.log("status data:", data, "valid?", hasValidData(data));
+
+            updateOrderStatus(data.order_status || []);
+            updateProcessing(data.processing || []);
+            renderPickup(data.pickup_list || []);
+
             if (hasValidData(data)) {
-                showMainUI(); 
-                updateOrderStatus(data.order_status);
-                updateProcessing(data.processing);
-                renderPickup(data.pickup_list);
+                showMainUI();
             } else {
-                showTempMainThenSlideshow();
+                console.log("⚠️ No valid data → going to slideshow");
+                setTimeout(() => {
+                    showTempMainThenSlideshow();
+                }, 500);
             }
         })
+
+
         .catch(err => {
             console.error("Error fetching status:", err);
             showTempMainThenSlideshow();
@@ -46,7 +54,7 @@ function updateProcessing(processingList) {
     processingList.slice(0, 2).forEach(proc => {
         const wrapper = document.createElement("div");
         wrapper.classList.add("processing-container");
-    if (!processingList || processingList.length === 0) {
+        if (!processingList || processingList.length === 0) {
             container.style.display = "none";
             return;
         }
@@ -94,6 +102,7 @@ function updateOrderStatus(orderStatus) {
 
 
 function renderPickup(pickupList) {
+    console.log("Rendering pickup list:", pickupList);
     for (let i = 1; i <= 16; i++) {
         const cell = document.getElementById(`pick-${i}`);
         if (cell) cell.innerHTML = "";
@@ -102,9 +111,15 @@ function renderPickup(pickupList) {
     pickupList.forEach(item => {
         const cell = document.getElementById(`pick-${item.pick}`);
         if (cell) {
+            let icon = "ic_cup.png";
+            if (item.menu && item.menu.trim().toLowerCase() === "ice cream") {
+                icon = "ic_icecream.png";
+            }
+
+
             cell.innerHTML = `
                 <div class="pickup-card">
-                    <img src="/static/images/ic_cup.png" alt="cup" class="pickup-icon">
+                    <img src="/static/images/${icon}" alt="icon" class="pickup-icon">
                     <div class="pickup-text">
                         <div class="order-no">${item.order_no}</div>
                         <div class="menu">${item.menu}</div>
@@ -149,14 +164,14 @@ function showTempMainThenSlideshow() {
     const slideshow = document.getElementById("slideshow");
     const mainUI = document.getElementById("main-ui");
 
-    slideshow.style.display = "none";
     mainUI.style.display = "block";
     mainUI.style.opacity = 1;
 
     slideshowDelayTimer = setTimeout(() => {
         showSlideshow();
-    }, 5000);
+    }, 1000);
 }
+
 
 function showSlideshow() {
     if (currentView === "slideshow") return;
@@ -185,7 +200,6 @@ function showSlideshow() {
 function resetVideo(videoEl) {
     if (!videoEl) return;
     videoEl.pause();
-   // videoEl.currentTime = 0;  
 }
 
 
@@ -197,7 +211,7 @@ function startSlideshow() {
         slides[current].classList.remove("active");
         if (slides[current].tagName === "VIDEO") {
             resetVideo(slides[current]);
-            slides[current].removeEventListener("ended", onVideoEnd); // 이벤트 정리
+            slides[current].removeEventListener("ended", onVideoEnd);
         }
 
         current = (current + 1) % slides.length;
@@ -207,7 +221,7 @@ function startSlideshow() {
             slides[current].play();
             slides[current].addEventListener("ended", onVideoEnd);
         } else {
-            slideshowTimer = setTimeout(showSlide, 5000);
+            slideshowTimer = setTimeout(showSlide, 4000);
         }
     }
 
@@ -221,7 +235,7 @@ function startSlideshow() {
         slides[current].play();
         slides[current].addEventListener("ended", onVideoEnd);
     } else {
-        slideshowTimer = setTimeout(showSlide, 5000);
+        slideshowTimer = setTimeout(showSlide, 4000);
     }
 }
 
@@ -239,7 +253,7 @@ function stopSlideshow() {
 
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("main-ui").style.display = "none";
-    document.getElementById("slideshow").style.display = "block"; 
+    document.getElementById("slideshow").style.display = "block";
     startSlideshow();
 
     fetchStatus();
