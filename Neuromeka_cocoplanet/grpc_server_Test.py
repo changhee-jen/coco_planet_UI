@@ -1,6 +1,6 @@
+# mock_grpc_server.py
 import time
 import json
-import random
 from concurrent import futures
 import grpc
 import coco_planet_grpc_server_pb2 as pb2
@@ -10,49 +10,62 @@ ADDRESS = "0.0.0.0:50051"
 
 class MockCoCoPlanetServicer(pb2_grpc.CoCoPlanetServicer):
     def SyncData(self, request, context):
-        # progress 값을 랜덤으로 두 개까지 생성
-        fake = {
-            "pickup_waiting_orders": {
-                "id-1": {
-                    "barcode": "202509300001",
-                    "recipe": "Iced Zero Sugar Vanilla Latte",
-                    "sensor": "cup_detection_sensor_1"
-                },
-                "id-2": {
-                    "barcode": "202509300002",
-                    "recipe": "Iced Plum Grapefruit Hibiscus Tea",
-                    "sensor": "cup_detection_sensor_2"
-                }
-            },
-            "working_orders": {
-                "id-3": {
-                    "barcode": "202509300003",
-                    "recipe": "Cappuccino",
-                    "sensor": "cup_detection_sensor_3",
-                    "progress": random.randint(0, 100)
-                },
-                "id-4": {
-                    "barcode": "202509300004",
-                    "recipe": "Americano",
-                    "sensor": "cup_detection_sensor_4",
-                    "progress": random.randint(0, 100)
-                }
-            },
-            "pre_orders": {
-                "id-5": {
-                    "barcode": "202509300005",
-                    "recipe": "Vanilla Latte"
-                },
-                "id-6": {
-                    "barcode": "202509300006",
-                    "recipe": "Espresso"
-                },
-                "id-7": {
-                    "barcode": "202509300007",
-                    "recipe": "ICE Americano"
-                }
-            }
-        }
+        # ✅ parse_grpc_data 구조에 맞춘 가짜 데이터
+        fake ={
+
+  "pickup_doors": {
+
+    "tray_1": {
+
+      "is_opened": False
+
+    },
+
+    "tray_2": {
+
+      "is_opened": False
+
+    },
+
+    "tray_3": {
+
+      "is_opened": False
+
+    },
+
+    "tray_4": {
+
+      "is_opened": False
+
+    }
+
+  },
+
+  "pre_orders": {},
+
+  "working_orders": {
+
+    "78d6e12a-3e75-469b-9f23-939f26f19b96": {
+
+      "sensor": "cup_detection_sensor_1",
+
+      "barcode": "2025070210022",
+
+      "recipe": "Iced Americano",
+
+      "recipekr": "아이스 아메리카노",
+
+      "progress": 30
+
+    }
+
+  },
+
+  "pickup_waiting_orders": {}
+
+}
+
+
 
         return pb2.SyncDataReply(json_string=json.dumps(fake, ensure_ascii=False))
 
