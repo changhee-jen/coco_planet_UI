@@ -55,7 +55,7 @@ class MockCoCoPlanetServicer(pb2_grpc.CoCoPlanetServicer):
 
       "recipekr": "아이스 아메리카노",
 
-      "progress": 30
+      "progress": 70
 
     }
 

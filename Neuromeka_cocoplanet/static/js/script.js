@@ -10,7 +10,6 @@ function hasValidData(data) {
 let slideshowTimer = null;
 let slideshowDelayTimer = null;
 let currentView = "slideshow";
-
 function fetchStatus() {
     fetch("/api/status")
         .then(response => {
@@ -24,14 +23,16 @@ function fetchStatus() {
                 updateProcessing(data.processing);
                 renderPickup(data.pickup_list);
             } else {
-                showSlideshow();
+                showTempMainThenSlideshow();
             }
         })
         .catch(err => {
             console.error("Error fetching status:", err);
-            showSlideshow();
+            showTempMainThenSlideshow();
         });
 }
+
+
 
 function updateProcessing(processingList) {
     const container = document.getElementById("processing-content");
@@ -154,7 +155,7 @@ function showTempMainThenSlideshow() {
 
     slideshowDelayTimer = setTimeout(() => {
         showSlideshow();
-    }, 3000);
+    }, 5000);
 }
 
 function showSlideshow() {
@@ -206,7 +207,7 @@ function startSlideshow() {
             slides[current].play();
             slides[current].addEventListener("ended", onVideoEnd);
         } else {
-            slideshowTimer = setTimeout(showSlide, 3000);
+            slideshowTimer = setTimeout(showSlide, 5000);
         }
     }
 
@@ -220,7 +221,7 @@ function startSlideshow() {
         slides[current].play();
         slides[current].addEventListener("ended", onVideoEnd);
     } else {
-        slideshowTimer = setTimeout(showSlide, 3000);
+        slideshowTimer = setTimeout(showSlide, 5000);
     }
 }
 
