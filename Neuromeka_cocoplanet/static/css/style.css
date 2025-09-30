@@ -13,7 +13,7 @@ body {
     height: 500px;
     display: flex;
     align-items: stretch;
-    border: 2px solid #333;
+    border: 4px solid #333;
     border-radius: 10px;
     overflow: hidden;
 }
@@ -45,7 +45,7 @@ body {
 .pickup-item table td {
     width: 150px;
     height: 50%;
-    border: 1px solid #333;
+    border: 3px solid #333;
     border-radius: 8px;
     vertical-align: middle;
     text-align: center;
@@ -102,7 +102,7 @@ body {
 
 .status-board {
     display: flex;
-    border: 2px solid #333;
+    border: 4px solid #333;
     border-radius: 8px;
     overflow: hidden;
     width: 600px;
@@ -142,38 +142,95 @@ body {
 }
 
 .status-content li {
-    font-size: 24px;
-    margin-bottom: 8px;
+    font-size: 28px;
+    margin-bottom: 6px;
 }
 
 
-#processing {
-    font-size: 24px;
+.processing-title {
+    font-weight: bold;
+    font-size: 32px;
     color: #333;
     margin: 0;
-    padding: 0;
+    margin-top: 50px;
+    padding: 0;}
+
+#processing-container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
 }
+.progress-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#progress-icon-container img {
+  width: 48px;
+  height: 48px;
+}
+
+#progress-info {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 20px;
+   white-space: nowrap;
+  font-weight: bold;
+}
+
+#progress-text {
+  color: #000;
+}
+
+#progress-status {
+  font-size: 16px;
+  font-weight: normal;
+  color: #666;
+}
+
+#progress-bar-container {
+  flex: 1;
+  width:300px;
+  height: 16px;
+  background: #c8e0c8;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background: #2e8b57;
+  border-radius: 8px;
+  transition: width 0.5s ease;
+}
+
 /* slideshow */
+
 #slideshow {
     position: relative;
     width: 100%;
     height: 100vh;
     overflow: hidden;
+    background: #000;
+    display: block;
 }
 
-/* 이미지와 영상 공통 */
 #slideshow img,
 #slideshow video {
     position: absolute;
     width: 100%;
     height: 100%;
     top: 0; left: 0;
-
+    object-fit: cover;
     opacity: 0;
     transition: opacity 1.5s ease-in-out;
+    border-radius: 0;
 }
 
-/* 현재 보여지는 요소 */
 #slideshow img.active,
 #slideshow video.active {
     opacity: 1;

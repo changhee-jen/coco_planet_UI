@@ -6,6 +6,10 @@ function hasValidData(data) {
     );
 }
 
+let slideshowTimer = null;
+let slideshowDelayTimer = null;
+let currentView = "slideshow";
+
 function fetchStatus() {
     fetch("/api/status")
         .then(response => {
@@ -14,49 +18,78 @@ function fetchStatus() {
         })
         .then(data => {
             if (hasValidData(data)) {
-                showMainUI();
-                console.log(data);
+                showMainUI(); 
                 updateOrderStatus(data.order_status);
                 updateProcessing(data.processing);
                 renderPickup(data.pickup_list);
             } else {
-                // 데이터 없음 → 슬라이드쇼
                 showSlideshow();
             }
         })
         .catch(err => {
             console.error("Error fetching status:", err);
-            // 통신 실패 → 슬라이드쇼
             showSlideshow();
         });
 }
 
+function updateProcessing(processingList) {
+    const container = document.getElementById("processing-content");
+    container.innerHTML = "";
 
+    if (!processingList || processingList.length === 0) {
+        return;
+    }
+
+
+    processingList.slice(0, 2).forEach(proc => {
+        const wrapper = document.createElement("div");
+        wrapper.classList.add("processing-container");
+    if (!processingList || processingList.length === 0) {
+            container.style.display = "none";
+            return;
+        }
+        wrapper.innerHTML = `
+            <div class="processing-title" style="margin-top:15px;">#${proc.order_no} - ${proc.menu}</div>
+            <div class="progress-container">
+                <div id="progress-icon-container">
+                    <img id="progress-icon" src="/static/images/${proc.progress >= 100 ? "ic_completed.png" : "loading.gif"}" 
+                         alt="progress">
+                </div>
+                <div class="progress-text-container">
+                    <div id="progress-info">
+                        <span id="progress-text">${proc.progress}%</span>
+                        <span id="progress-status">${proc.progress >= 100 ? "Completed" : "Brewing"}</span>
+                    </div>
+                    <div id="progress-bar-container">
+                        <div id="progress-bar" class="progress-bar" style="width:${proc.progress}%;"></div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        container.appendChild(wrapper);
+    });
+}
+
+
+// ===== Order Status =====
 function updateOrderStatus(orderStatus) {
     const orderStatusList = document.getElementById("order-status-list");
     orderStatusList.innerHTML = "";
 
-    orderStatus.slice(0, 3).forEach(item => {
+    orderStatus.slice(0, 5).forEach(item => {
         const li = document.createElement("li");
         li.textContent = `#${item.order_no} - ${item.menu}`;
         orderStatusList.appendChild(li);
     });
 
-    if (orderStatus.length > 3) {
+    if (orderStatus.length > 5) {
         const li = document.createElement("li");
         li.textContent = "...";
         orderStatusList.appendChild(li);
     }
 }
 
-function updateProcessing(processing) {
-    const processingEl = document.getElementById("processing");
-    if (!processing || !processing.order_no || processing.order_no === "-") {
-        processingEl.textContent = "";
-    } else {
-        processingEl.textContent = `#${processing.order_no} - ${processing.menu}`;
-    }
-}
 
 function renderPickup(pickupList) {
     for (let i = 1; i <= 16; i++) {
@@ -81,11 +114,11 @@ function renderPickup(pickupList) {
 }
 
 // ===== UI 전환 =====
-let currentView = "slideshow"; 
-
 function showMainUI() {
     if (currentView === "main") return;
     currentView = "main";
+
+    stopSlideshow();
 
     const slideshow = document.getElementById("slideshow");
     const mainUI = document.getElementById("main-ui");
@@ -103,6 +136,24 @@ function showMainUI() {
             mainUI.style.opacity = 1;
         }, 50);
     }, 1000);
+}
+
+function showTempMainThenSlideshow() {
+    if (currentView === "slideshow") return;
+    currentView = "temp-main";
+
+    stopSlideshow();
+
+    const slideshow = document.getElementById("slideshow");
+    const mainUI = document.getElementById("main-ui");
+
+    slideshow.style.display = "none";
+    mainUI.style.display = "block";
+    mainUI.style.opacity = 1;
+
+    slideshowDelayTimer = setTimeout(() => {
+        showSlideshow();
+    }, 3000);
 }
 
 function showSlideshow() {
@@ -123,11 +174,12 @@ function showSlideshow() {
         setTimeout(() => {
             slideshow.style.transition = "opacity 1.5s ease-in-out";
             slideshow.style.opacity = 1;
+            startSlideshow();
         }, 50);
     }, 1000);
 }
 
-// ===== 슬라이드쇼 순환 =====
+// ===== 슬라이드쇼 =====
 function startSlideshow() {
     let slides = document.querySelectorAll("#slideshow img, #slideshow video");
     let current = 0;
@@ -144,25 +196,35 @@ function startSlideshow() {
 
         if (slides[current].tagName === "VIDEO") {
             slides[current].play();
-            setTimeout(showSlide, (slides[current].duration || 5) * 1000);
+            slideshowTimer = setTimeout(showSlide, (slides[current].duration || 5) * 1000);
         } else {
-            setTimeout(showSlide, 4000);
+            slideshowTimer = setTimeout(showSlide, 4000);
         }
     }
 
-    // 첫 슬라이드 시작
     slides[current].classList.add("active");
     if (slides[current].tagName === "VIDEO") {
         slides[current].play();
-        setTimeout(showSlide, (slides[current].duration || 5) * 1000);
+        slideshowTimer = setTimeout(showSlide, (slides[current].duration || 5) * 1000);
     } else {
-        setTimeout(showSlide, 4000);
+        slideshowTimer = setTimeout(showSlide, 4000);
     }
 }
 
+function stopSlideshow() {
+    if (slideshowTimer) {
+        clearTimeout(slideshowTimer);
+        slideshowTimer = null;
+    }
+    if (slideshowDelayTimer) {
+        clearTimeout(slideshowDelayTimer);
+        slideshowDelayTimer = null;
+    }
+}
 
 document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("main-ui").style.display = "none"; //
+    document.getElementById("main-ui").style.display = "none";
+    document.getElementById("slideshow").style.display = "block"; 
     startSlideshow();
 
     fetchStatus();

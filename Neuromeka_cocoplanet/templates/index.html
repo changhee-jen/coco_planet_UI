@@ -12,8 +12,7 @@
 
 <body>
     <div id="slideshow">
-        <img src="{{ url_for('static', filename='images/wait1.png') }}" class="active">
-        <img src="{{ url_for('static', filename='images/wait2.png') }}">
+        <img src="{{ url_for('static', filename='images/wait2.png') }}" class="active">
         <img src="{{ url_for('static', filename='images/wait3.png') }}">
         <video src="/static/videos/intro.mp4" muted></video>
     </div>
@@ -24,59 +23,59 @@
                 Pick<br>Up
             </div>
 
-           <div class="pickup-grid">
-    <div class="pickup-item" id="table1">
-        <table>
-            <tr>
-                <td id="pick-16"></td>
-                <td id="pick-15"></td>
-            </tr>
-            <tr>
-                <td id="pick-14"></td>
-                <td id="pick-13"></td>
-            </tr>
-        </table>
-    </div>
+            <div class="pickup-grid">
+                <div class="pickup-item" id="table1">
+                    <table>
+                        <tr>
+                            <td id="pick-16"></td>
+                            <td id="pick-15"></td>
+                        </tr>
+                        <tr>
+                            <td id="pick-14"></td>
+                            <td id="pick-13"></td>
+                        </tr>
+                    </table>
+                </div>
 
-    <div class="pickup-item" id="table2">
-        <table>
-            <tr>
-                <td id="pick-12"></td>
-                <td id="pick-11"></td>
-            </tr>
-            <tr>
-                <td id="pick-10"></td>
-                <td id="pick-9"></td>
-            </tr>
-        </table>
-    </div>
+                <div class="pickup-item" id="table2">
+                    <table>
+                        <tr>
+                            <td id="pick-12"></td>
+                            <td id="pick-11"></td>
+                        </tr>
+                        <tr>
+                            <td id="pick-10"></td>
+                            <td id="pick-9"></td>
+                        </tr>
+                    </table>
+                </div>
 
-    <div class="pickup-item" id="table3">
-        <table>
-            <tr>
-                <td id="pick-8"></td>
-                <td id="pick-7"></td>
-            </tr>
-            <tr>
-                <td id="pick-6"></td>
-                <td id="pick-5"></td>
-            </tr>
-        </table>
-    </div>
+                <div class="pickup-item" id="table3">
+                    <table>
+                        <tr>
+                            <td id="pick-8"></td>
+                            <td id="pick-7"></td>
+                        </tr>
+                        <tr>
+                            <td id="pick-6"></td>
+                            <td id="pick-5"></td>
+                        </tr>
+                    </table>
+                </div>
 
-    <div class="pickup-item" id="table4">
-        <table>
-            <tr>
-                <td id="pick-4"></td>
-                <td id="pick-3"></td>
-            </tr>
-            <tr>
-                <td id="pick-2"></td>
-                <td id="pick-1"></td>
-            </tr>
-        </table>
-    </div>
-</div>
+                <div class="pickup-item" id="table4">
+                    <table>
+                        <tr>
+                            <td id="pick-4"></td>
+                            <td id="pick-3"></td>
+                        </tr>
+                        <tr>
+                            <td id="pick-2"></td>
+                            <td id="pick-1"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
 
         </div>
 
@@ -86,20 +85,42 @@
                     class="logo">
             </div>
             <div class="status-board">
-    <div class="status-title">Order<br>Status</div>
-    <div class="status-content">
-        <ul id="order-status-list"></ul>
-    </div>
-</div>
+                <div class="status-title">Order<br>Status</div>
+                <div class="status-content">
+                    <ul id="order-status-list"></ul>
+                </div>
+            </div>
 
-<div class="status-board">
-     <div class="status-title">Processing</div>
-      <div class="status-content">
-       <div id="processing"></div>
-    </div>
-</div>
+            <div class="status-board">
+                <div class="status-title">Processing</div>
+                <div class="status-content" id="processing-content">
+                    <div id="processing-container">
+                        <div id="processing"></div>
+
+                        <div class="progress-container">
+
+                            <div id="progress-icon-container">
+                                <img id="progress-icon" src="{{ url_for('static', filename='images/loading.gif') }}"
+                                    alt="progress">
+                            </div>
+                            <div class="progress-text-container">
+                                <div id="progress-info">
+                                    <span id="progress-text">0%</span>
+                                    <span id="progress-status">Brewing</span>
+                                </div>
+
+                                <div id="progress-bar-container">
+                                    <div id="progress-bar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
+
+    </div>
     </div>
 </body>
 

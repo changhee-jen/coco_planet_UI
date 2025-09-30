@@ -15,13 +15,12 @@ import coco_planet_grpc_server_pb2_grpc as pb2_grpc
 # ---------------------------
 # gRPC 설정
 # ---------------------------
-ADDRESS = "192.168.20.132:50051"
+ADDRESS = "localhost:50051"
 PERIOD_S = 1.0
 TIMEOUT_S = 2.0
 BACKOFF_INIT = 1.0
 BACKOFF_MAX = 10.0
 
-# 최신 gRPC 데이터를 저장할 전역 변수
 latest_data = {
     "pickup_list": [],
     "order_status": [],
@@ -43,9 +42,8 @@ def setup_channel():
 def parse_grpc_data(grpc_json: dict):
     pickup_list = []
     order_status = []
-    processing = {"order_no": "-", "menu": "-"}
+    processing = [] 
 
-    # pickup_waiting_orders → pickup_list
     for oid, order in grpc_json.get("pickup_waiting_orders", {}).items():
         order_no = order["barcode"][-4:]
         menu = order["recipe"]
@@ -58,14 +56,15 @@ def parse_grpc_data(grpc_json: dict):
             "menu": menu
         })
 
-    # working_orders → processing
+    # working_orders → processing 
     for oid, order in grpc_json.get("working_orders", {}).items():
         order_no = order["barcode"][-4:]
         menu = order["recipe"]
-        processing = {
+        processing.append({
             "order_no": order_no,
-            "menu": menu
-        }
+            "menu": menu,
+            "progress": order.get("progress", 0)  
+        })
 
     # pre_orders → order_status
     for oid, order in grpc_json.get("pre_orders", {}).items():
@@ -79,7 +78,7 @@ def parse_grpc_data(grpc_json: dict):
     return {
         "pickup_list": pickup_list,
         "order_status": order_status,
-        "processing": processing
+        "processing": processing  
     }
 
 
@@ -111,7 +110,6 @@ def grpc_loop(stop_event):
                     parsed = json.loads(reply.json_string)
                     latest_data = parse_grpc_data(parsed)
 
-                    # 받은 데이터 출력
                     print(f"[{time.strftime('%H:%M:%S')}] gRPC 데이터 수신:")
                     print(json.dumps(parsed, ensure_ascii=False, indent=2))
                     print("→ 변환 결과:")
