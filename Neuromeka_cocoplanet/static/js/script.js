@@ -39,6 +39,8 @@ function fetchStatus() {
             showTempMainThenSlideshow();
         });
 }
+
+
 function updateProcessing(processingList) {
     const container = document.getElementById("processing-content");
     container.innerHTML = "";
@@ -48,10 +50,11 @@ function updateProcessing(processingList) {
         return;
     }
 
-const isIceCream = processingList.some(proc => proc.menu === "Ice cream");
+    // 리스트에 Ice cream 포함 여부 확인
+    const hasIceCream = processingList.some(proc => proc.menu === "Ice cream");
 
-
-    const displayList = isIceCream
+    // Ice cream 있으면 2개, 아니면 1개
+    const displayList = hasIceCream
         ? processingList.slice(0, 2)
         : processingList.slice(0, 1);
 
@@ -81,6 +84,7 @@ const isIceCream = processingList.some(proc => proc.menu === "Ice cream");
         container.appendChild(wrapper);
     });
 }
+
 
 // ===== Order Status =====
 function updateOrderStatus(orderStatus) {
@@ -112,7 +116,7 @@ function renderPickup(pickupList) {
         const cell = document.getElementById(`pick-${item.pick}`);
         if (cell) {
             let icon = "ic_cup.png";
-            if (item.menu && item.menu.trim().toLowerCase() === "Ice cream") {
+            if (item.menu && item.menu.trim().toLowerCase() === "ice cream") {
                 icon = "ic_icecream.png";
             }
 
