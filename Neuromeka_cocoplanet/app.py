@@ -158,7 +158,7 @@ if __name__ == "__main__":
     t.start()
 
     try:
-        app.run(debug=True, use_reloader=False)  
+        app.run(debug=True, use_reloader=False, port=5050)
     finally:
         stop_event.set()
         t.join()

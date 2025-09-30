@@ -13,58 +13,13 @@ class MockCoCoPlanetServicer(pb2_grpc.CoCoPlanetServicer):
         # ✅ parse_grpc_data 구조에 맞춘 가짜 데이터
         fake = {
             "pickup_waiting_orders": {
-                "id-1": {
-                    "barcode": "202509300001",
-                    "recipe": "Ice cream",
-                    "sensor": "cup_detection_sensor_1"
-                },
-                "id-2": {
-                    "barcode": "202509300002",
-                    "recipe": "Hot-Latte",
-                    "sensor": "cup_detection_sensor_2"
-                }
+              
             },
             "working_orders": {
-                "id-3": {
-                    "barcode": "202509300003",
-                    "recipe": "Cappuccino",
-                    "sensor": "cup_detection_sensor_3"
-                },
-                "id-4": {
-                    "barcode": "202509300003",
-                    "recipe": "ICEcream",
-                    "sensor": "cup_detection_sensor_3"
-                }
+             
             },
             "pre_orders": {
-                "id-4": {
-                    "barcode": "202509300004",
-                    "recipe": "Vanilla Latte"
-                },
-                "id-5": {
-                    "barcode": "202509300005",
-                    "recipe": "Espresso"
-                },
-                "id-6": {
-                    "barcode": "202509300005",
-                    "recipe": "Espresso"
-                },
-                "id-7": {
-                    "barcode": "202509300005",
-                    "recipe": "Espresso"
-                },
-                 "id-8": {
-                    "barcode": "202509300005",
-                    "recipe": "Espresso"
-                },
-                  "id-9": {
-                    "barcode": "202509300005",
-                    "recipe": "Espresso"
-                },
-                   "id-10": {
-                    "barcode": "202509300005",
-                    "recipe": ""
-                }
+              
             }
         }
 
