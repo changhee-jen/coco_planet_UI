@@ -2,9 +2,10 @@ function hasValidData(data) {
     return (
         (data.pickup_list && data.pickup_list.length > 0) ||
         (data.order_status && data.order_status.length > 0) ||
-        (data.processing && data.processing.order_no && data.processing.order_no !== "-")
+        (data.processing && data.processing.length > 0)
     );
 }
+
 
 let slideshowTimer = null;
 let slideshowDelayTimer = null;
