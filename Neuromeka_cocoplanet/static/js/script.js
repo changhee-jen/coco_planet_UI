@@ -172,7 +172,7 @@ function showSlideshow() {
         slideshow.style.opacity = 0;
 
         setTimeout(() => {
-            slideshow.style.transition = "opacity 1.5s ease-in-out";
+            slideshow.style.transition = "opacity 1s ease-in-out";
             slideshow.style.opacity = 1;
             startSlideshow();
         }, 50);
@@ -180,6 +180,13 @@ function showSlideshow() {
 }
 
 // ===== 슬라이드쇼 =====
+function resetVideo(videoEl) {
+    if (!videoEl) return;
+    videoEl.pause();
+   // videoEl.currentTime = 0;  
+}
+
+
 function startSlideshow() {
     let slides = document.querySelectorAll("#slideshow img, #slideshow video");
     let current = 0;
@@ -187,8 +194,8 @@ function startSlideshow() {
     function showSlide() {
         slides[current].classList.remove("active");
         if (slides[current].tagName === "VIDEO") {
-            slides[current].pause();
-            slides[current].currentTime = 0;
+            resetVideo(slides[current]);
+            slides[current].removeEventListener("ended", onVideoEnd); // 이벤트 정리
         }
 
         current = (current + 1) % slides.length;
@@ -196,20 +203,26 @@ function startSlideshow() {
 
         if (slides[current].tagName === "VIDEO") {
             slides[current].play();
-            slideshowTimer = setTimeout(showSlide, (slides[current].duration || 5) * 1000);
+            slides[current].addEventListener("ended", onVideoEnd);
         } else {
-            slideshowTimer = setTimeout(showSlide, 4000);
+            slideshowTimer = setTimeout(showSlide, 3000);
         }
     }
 
+    function onVideoEnd() {
+        showSlide(); // 영상이 끝나자마자 바로 전환
+    }
+
+    // 첫 시작
     slides[current].classList.add("active");
     if (slides[current].tagName === "VIDEO") {
         slides[current].play();
-        slideshowTimer = setTimeout(showSlide, (slides[current].duration || 5) * 1000);
+        slides[current].addEventListener("ended", onVideoEnd);
     } else {
-        slideshowTimer = setTimeout(showSlide, 4000);
+        slideshowTimer = setTimeout(showSlide, 3000);
     }
 }
+
 
 function stopSlideshow() {
     if (slideshowTimer) {
