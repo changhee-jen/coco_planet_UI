@@ -39,25 +39,26 @@ function fetchStatus() {
             showTempMainThenSlideshow();
         });
 }
-
-
-
 function updateProcessing(processingList) {
     const container = document.getElementById("processing-content");
     container.innerHTML = "";
 
     if (!processingList || processingList.length === 0) {
+        container.style.display = "none";
         return;
     }
 
+const isIceCream = processingList.some(proc => proc.menu === "Ice cream");
 
-    processingList.slice(0, 2).forEach(proc => {
+
+    const displayList = isIceCream
+        ? processingList.slice(0, 2)
+        : processingList.slice(0, 1);
+
+    displayList.forEach(proc => {
         const wrapper = document.createElement("div");
         wrapper.classList.add("processing-container");
-        if (!processingList || processingList.length === 0) {
-            container.style.display = "none";
-            return;
-        }
+
         wrapper.innerHTML = `
             <div class="processing-title" style="margin-top:15px;">#${proc.order_no} - ${proc.menu}</div>
             <div class="progress-container">
@@ -80,7 +81,6 @@ function updateProcessing(processingList) {
         container.appendChild(wrapper);
     });
 }
-
 
 // ===== Order Status =====
 function updateOrderStatus(orderStatus) {
@@ -112,7 +112,7 @@ function renderPickup(pickupList) {
         const cell = document.getElementById(`pick-${item.pick}`);
         if (cell) {
             let icon = "ic_cup.png";
-            if (item.menu && item.menu.trim().toLowerCase() === "ice cream") {
+            if (item.menu && item.menu.trim().toLowerCase() === "Ice cream") {
                 icon = "ic_icecream.png";
             }
 
@@ -257,5 +257,5 @@ document.addEventListener("DOMContentLoaded", () => {
     startSlideshow();
 
     fetchStatus();
-    setInterval(fetchStatus, 1000);
+    setInterval(fetchStatus, 500);
 });
