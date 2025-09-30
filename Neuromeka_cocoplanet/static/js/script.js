@@ -51,7 +51,7 @@ function updateProcessing(processingList) {
     }
 
 
-    processingList.slice(0, 1).forEach(proc => {
+    processingList.slice(0, 2).forEach(proc => {
         const wrapper = document.createElement("div");
         wrapper.classList.add("processing-container");
         if (!processingList || processingList.length === 0) {
@@ -257,5 +257,5 @@ document.addEventListener("DOMContentLoaded", () => {
     startSlideshow();
 
     fetchStatus();
-    setInterval(fetchStatus, 500);
+    setInterval(fetchStatus, 1000);
 });
