@@ -40,27 +40,24 @@ function fetchStatus() {
         });
 }
 
+
+
 function updateProcessing(processingList) {
     const container = document.getElementById("processing-content");
     container.innerHTML = "";
 
     if (!processingList || processingList.length === 0) {
-        container.style.display = "none";
         return;
     }
 
-    const hasIceCream = processingList.some(proc => 
-        proc.menu && proc.menu.toLowerCase() === "ice cream"
-    );
 
-    const displayList = hasIceCream
-        ? processingList.slice(0, 2)
-        : processingList.slice(0, 1);
-
-    displayList.forEach(proc => {
+    processingList.slice(0, 1).forEach(proc => {
         const wrapper = document.createElement("div");
         wrapper.classList.add("processing-container");
-
+        if (!processingList || processingList.length === 0) {
+            container.style.display = "none";
+            return;
+        }
         wrapper.innerHTML = `
             <div class="processing-title" style="margin-top:15px;">#${proc.order_no} - ${proc.menu}</div>
             <div class="progress-container">
