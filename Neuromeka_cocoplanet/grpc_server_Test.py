@@ -10,7 +10,6 @@ ADDRESS = "0.0.0.0:50051"
 
 class MockCoCoPlanetServicer(pb2_grpc.CoCoPlanetServicer):
     def SyncData(self, request, context):
-        # ✅ parse_grpc_data 구조에 맞춘 가짜 데이터
         fake = {
             "pickup_doors": {
                 "tray_1": {"is_opened": False},
