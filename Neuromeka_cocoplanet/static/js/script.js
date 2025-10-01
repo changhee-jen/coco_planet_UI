@@ -112,7 +112,7 @@ function renderPickup(pickupList) {
         const cell = document.getElementById(`pick-${item.pick}`);
         if (cell) {
             let icon = "ic_cup.png";
-            if (item.menu && item.menu.trim().toLowerCase() === "ice cream") {
+            if (item.menu && item.menu.trim().toLowerCase() === "Milk Ice Cream") {
                 icon = "ic_icecream.png";
             }
 
