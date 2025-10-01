@@ -7,7 +7,8 @@ import threading
 import grpc
 from google.protobuf import empty_pb2
 from flask import Flask, render_template, jsonify
-
+import subprocess
+import threading
 import coco_planet_grpc_server_pb2 as pb2
 import coco_planet_grpc_server_pb2_grpc as pb2_grpc
 
@@ -156,6 +157,20 @@ if __name__ == "__main__":
     stop_event = threading.Event()
     t = threading.Thread(target=grpc_loop, args=(stop_event,), daemon=True)
     t.start()
+
+    url = "http://localhost:5050"
+    # chrome_path = "/usr/bin/chromium-browser"  # 또는 /usr/bin/google-chrome
+    chrome_path = r"C:\Program Files\Google\Chrome\Application\chrome.exe" 
+    subprocess.Popen([
+        chrome_path,
+        "--kiosk",          # 키오스크 모드 (F11 전체화면)
+        "--app=" + url,     # 앱 모드 (주소창/탭 제거)
+        "--incognito",      # 캐시/히스토리 제거
+        "--noerrdialogs",   # 에러 팝업 차단
+        "--disable-translate",
+        "--disable-infobars",
+        url
+    ])
 
     try:
         app.run(debug=True, use_reloader=False, port=5050)
