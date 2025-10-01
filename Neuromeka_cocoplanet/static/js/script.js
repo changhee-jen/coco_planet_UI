@@ -196,7 +196,6 @@ function showSlideshow() {
     }, 1000);
 }
 
-// ===== 슬라이드쇼 =====
 function resetVideo(videoEl) {
     if (!videoEl) return;
     videoEl.pause();
@@ -226,10 +225,9 @@ function startSlideshow() {
     }
 
     function onVideoEnd() {
-        showSlide(); // 영상이 끝나자마자 바로 전환
+        showSlide(); 
     }
 
-    // 첫 시작
     slides[current].classList.add("active");
     if (slides[current].tagName === "VIDEO") {
         slides[current].play();
