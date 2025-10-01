@@ -81,12 +81,13 @@ body {
     margin: 0.5vh 0;
 }
 .menu {
-    font-size: 1.2vw;
+    font-size: 1vw;
     text-align: center;
-    word-break: break-word;    /* 긴 단어도 강제 줄바꿈 */
-    overflow-wrap: break-word; /* 최신 표준 */
-    white-space: normal;       /* nowrap 방지 */
+    word-break: break-word;    /* 긴 단어/한글 줄바꿈 허용 */
+    overflow-wrap: break-word; /* 최신 브라우저 대응 */
+    white-space: normal;       /* nowrap 해제 */
     max-width: 100%;
+    flex-shrink: 1;            /* 부모 크기 안에서 줄어들도록 */
 }
 
 
