@@ -137,6 +137,23 @@ def grpc_loop(stop_event):
         if elapsed < PERIOD_S:
             time.sleep(PERIOD_S - elapsed)
 
+def ensure_firefox_kiosk():
+    while True:
+        try:
+            # 프로세스 목록 확인
+            output = subprocess.check_output(["pgrep", "-x", "firefox"])
+            if output.strip():
+                # firefox가 켜져 있음
+                pass
+        except subprocess.CalledProcessError:
+            # firefox가 없음 → 실행
+            print("[INFO] Firefox not running, starting kiosk...")
+            subprocess.Popen([
+                "firefox",
+                "--kiosk",
+                "http://localhost:5050"
+            ])
+        time.sleep(10) 
 # ---------------------------
 # Flask 설정
 # ---------------------------
@@ -152,32 +169,28 @@ def index():
 def get_status():
     return jsonify(latest_data)
 
+
 if __name__ == "__main__":
     stop_event = threading.Event()
     t = threading.Thread(target=grpc_loop, args=(stop_event,), daemon=True)
     t.start()
 
     try:
-        # Flask 서버 실행을 별도 스레드에서 돌림
         app_thread = threading.Thread(
             target=lambda: app.run(debug=True, use_reloader=False, port=5050),
             daemon=True
         )
         app_thread.start()
 
-        # 서버 뜰 때까지 잠시 대기 후 Firefox 키오스크 실행
-        time.sleep(3)
-        subprocess.Popen([
-            "firefox",
-            "--kiosk",
-            "http://localhost:5050"
-        ])
+        # 브라우저 체크 스레드 시작
+        threading.Thread(target=ensure_firefox_kiosk, daemon=True).start()
 
         app_thread.join()
 
     finally:
         stop_event.set()
         t.join()
+
 # if __name__ == "__main__":
 #     stop_event = threading.Event()
 #     t = threading.Thread(target=grpc_loop, args=(stop_event,), daemon=True)
