@@ -164,7 +164,7 @@ if __name__ == "__main__":
         )
         app_thread.start()
 
-        time.sleep(10)
+        time.sleep(3)
         subprocess.Popen([
             "firefox",
             "--kiosk",
