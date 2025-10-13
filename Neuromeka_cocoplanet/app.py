@@ -188,21 +188,21 @@ if __name__ == "__main__":
 #             daemon=True
 #         )
 #         app_thread.start()
-#         # subprocess.Popen([
-#         #     r"C:\Program Files\Google\Chrome\Application\chrome.exe",
-#         #     "--start-fullscreen",   # 크롬은 --kiosk 대신 이걸 권장
-#         #     "--disable-infobars",
-#         #     "http://localhost:5050"
-#         # ])
-
-
 #         subprocess.Popen([
-#             "chromium-browser",
-#             "--noerrdialogs",
+#             r"C:\Program Files\Google\Chrome\Application\chrome.exe",
+#             "--start-fullscreen",   # 크롬은 --kiosk 대신 이걸 권장
 #             "--disable-infobars",
-#             "--kiosk",
 #             "http://localhost:5050"
 #         ])
+
+
+#         # subprocess.Popen([
+#         #     "chromium-browser",
+#         #     "--noerrdialogs",
+#         #     "--disable-infobars",
+#         #     "--kiosk",
+#         #     "http://localhost:5050"
+#         # ])
 
 #         # 메인 스레드는 대기
 #         app_thread.join()
