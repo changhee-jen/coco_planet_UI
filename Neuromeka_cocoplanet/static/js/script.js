@@ -48,7 +48,9 @@ function updateProcessing(processingList) {
   container.innerHTML = "";
 
   if (!Array.isArray(processingList) || processingList.length === 0) {
-    container.style.display = "none";
+    // container.style.display = "none";
+    console.log("No processing items");
+    
     return;
   }
   container.style.display = "";
