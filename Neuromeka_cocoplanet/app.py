@@ -152,62 +152,62 @@ def index():
 def get_status():
     return jsonify(latest_data)
 
-# if __name__ == "__main__":
-#     stop_event = threading.Event()
-#     t = threading.Thread(target=grpc_loop, args=(stop_event,), daemon=True)
-#     t.start()
-
-#     try:
-#         app_thread = threading.Thread(
-#             target=lambda: app.run(debug=True, use_reloader=False, port=5050),
-#             daemon=True
-#         )
-#         app_thread.start()
-
-#         time.sleep(3)
-#         subprocess.Popen([
-#             "firefox",
-#             "--kiosk",
-#             "http://localhost:5050"
-#         ])
-
-#         app_thread.join()
-
-#     finally:
-#         stop_event.set()
-#         t.join()
 if __name__ == "__main__":
     stop_event = threading.Event()
     t = threading.Thread(target=grpc_loop, args=(stop_event,), daemon=True)
     t.start()
 
     try:
-        # Flask 서버 실행
         app_thread = threading.Thread(
             target=lambda: app.run(debug=True, use_reloader=False, port=5050),
             daemon=True
         )
         app_thread.start()
-        # subprocess.Popen([
-        #     r"C:\Program Files\Google\Chrome\Application\chrome.exe",
-        #     "--start-fullscreen",   # 크롬은 --kiosk 대신 이걸 권장
-        #     "--disable-infobars",
-        #     "http://localhost:5050"
-        # ])
 
-
+        time.sleep(3)
         subprocess.Popen([
-            "chromium-browser",
-            "--noerrdialogs",
-            "--disable-infobars",
+            "firefox",
             "--kiosk",
             "http://localhost:5050"
         ])
 
-        # 메인 스레드는 대기
         app_thread.join()
 
     finally:
         stop_event.set()
         t.join()
+# if __name__ == "__main__":
+#     stop_event = threading.Event()
+#     t = threading.Thread(target=grpc_loop, args=(stop_event,), daemon=True)
+#     t.start()
+
+#     try:
+#         # Flask 서버 실행
+#         app_thread = threading.Thread(
+#             target=lambda: app.run(debug=True, use_reloader=False, port=5050),
+#             daemon=True
+#         )
+#         app_thread.start()
+#         # subprocess.Popen([
+#         #     r"C:\Program Files\Google\Chrome\Application\chrome.exe",
+#         #     "--start-fullscreen",   # 크롬은 --kiosk 대신 이걸 권장
+#         #     "--disable-infobars",
+#         #     "http://localhost:5050"
+#         # ])
+
+
+#         subprocess.Popen([
+#             "chromium-browser",
+#             "--noerrdialogs",
+#             "--disable-infobars",
+#             "--kiosk",
+#             "http://localhost:5050"
+#         ])
+
+#         # 메인 스레드는 대기
+#         app_thread.join()
+
+#     finally:
+#         stop_event.set()
+#         t.join()
 
