@@ -1,78 +1,95 @@
-body,
-.order-status,
-.processing,
-.pickup-item .menu {
-    font-family: 'Roboto Condensed', sans-serif;
-      overflow-y: hidden;
-}
-
+/* Base */
 body {
+      background: #6f8f4a;   
     margin: 0;
+    overflow-y: hidden;
+    font-family: 'Roboto Condensed', sans-serif;
 }
 
+/* Layout containers */
 .container {
-    padding: 2vh 2vw;
+    padding: 0.5vh 1vw;
 }
-
+/* === PICKUP BOARD 컨테이너 === */
 .pickup-board {
-    height: 60vh;
-    display: flex;
-    align-items: stretch;
-    border: 0.5vw solid #333;
-    border-radius: 1vw;
-    overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  margin-top: 1vh;
+  border: none;              
+  border-radius: 24px;
+  background: #6f8f4a;        
+  padding: 15px;              
+  overflow: hidden;
 }
 
-.pickup-title {
-    background: #333;
-    color: #fff;
-    padding: 2vh 1vw;
-    font-size: 2vw;
-    font-weight: bold;
-    text-orientation: upright;
-    letter-spacing: 0.6vw;
+/* 바깥 얇은 라인 */
+.pickup-board::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 20px;
+  border: 2px solid #dfeac9;    
+  pointer-events: none;
 }
 
+
+/* === 안쪽 흰 패널 === */
 .pickup-grid {
-    display: flex;
-    flex: 1;
-    justify-content: space-around;
-    align-items: center;
-    padding: 2vh 2vw;
+  position: relative;
+  flex: 1;
+  margin: 2vh;
+  margin-top: 5vh;            
+  background: #fff;
+  border-radius: 16px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .pickup-item table {
-    border-collapse: collapse;
-    table-layout: fixed;
-    width: 18vw;
-    height: 100%;
+  border-collapse: separate;
+  table-layout: fixed;
+  border-spacing: 1vw 1vh; 
+  width: 18vw;
+  height: auto;
 }
 
-.pickup-item table td {
-    width: 9vw;
-    padding-top: 30px;
-    height: 20vh;
-    border: 0.3vw solid #333;
-    border-radius: 0.6vw;
-    vertical-align: middle;
-    text-align: center;
-    font-size: 1.5vw;
-    
+/* === 카드 셀(td) === */
+.pickup-item td {
+  background-color: #f4f8f1;  
+  border-radius: 14px;
+  width: 10vw;
+  height: 22vh;
+  padding-top: 30px;
+  box-shadow: 0 2px 5px rgba(0,0,0,.08);
+  vertical-align: middle;
+  transition: background-color .25s ease;
+}
+
+.pickup-item td.active {
+  background-color: #d4e2c6;   
 }
 
 .pickup-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100%;
-    box-sizing: border-box;
-    padding: 1vh 1vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 1vh 1vw;
 }
+
+.pickup-icon { width: 4vw; height: auto; margin-bottom: .4vh; }
+.order-no   { font-weight: 800; font-size: 2.2vw; margin: .4vh 0; }
+.menu       { font-size: 1.4vw; text-align: center; word-break: break-word; }
+
 
 .pickup-icon {
     width: 4vw;
     height: auto;
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 .order-no {
@@ -80,68 +97,84 @@ body {
     font-size: 2.5vw;
     margin: 0.5vh 0;
 }
-.menu {
+
+.menu,
+.order-status,
+.processing,
+.pickup-item .menu {
     font-size: 1.5vw;
     text-align: center;
-    word-break: break-word;    /* 긴 단어/한글 줄바꿈 허용 */
-    overflow-wrap: break-word; /* 최신 브라우저 대응 */
-    white-space: normal;       /* nowrap 해제 */
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
     max-width: 100%;
-    flex-shrink: 1;            /* 부모 크기 안에서 줄어들도록 */
+    flex-shrink: 1;
 }
 
-
-.pickup-item {
-    height: 100%;
-    border-radius: 0.6vw;
-    padding: 1vh 1vw;
-}
-
+/* Footer */
 .footer {
     display: flex;
     justify-content: space-between;
-    margin-top: 3vh;
-    gap: 2vw;
+    margin-top: 1.5vh;
+
 }
 
 #footer-img {
     height: 30vh;
     object-fit: contain;
+    margin-right: 3vw;
 }
 
+/* Status board */
 .status-board {
-    display: flex;
-    border: 0.5vw solid #333;
-    border-radius: 0.6vw;
-    overflow: hidden;
-    width: 35vw;
-    height: 30vh;
+  position: relative;
+ width: 37vw; height: 30vh;
+  border: none;               
+  border-radius: 16px;
+  background: #6f8f4a;        
+  padding: 12px;     
+          
+  overflow: hidden;
+  display: block;           }
+  
+.status-board::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 12px;
+  border: 2px solid #dfeac9;
+  pointer-events: none;
 }
-
 #pickup-title {
     padding: 1vh 1vw;
     min-width: 5vw;
     font-size: 2vw;
 }
 
-.status-title {
-    background: #333;
-    color: #fff;
-    padding: 1vh 1vw;
-    font-size: 2vw;
-    font-weight: bold;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    text-align: center;
-    align-items: flex-start;
-    min-width: 8vw;
+
+.status-board .status-title::after {
+  content: "";
+  position: relative;
+  top: -0.2em;
+  height: 2px;
+  width: 60%;            
+  background: #dfeac9;
+  margin-left: 0.8vw;
+  vertical-align: middle;
 }
 
 .status-content {
-    flex: 1;
-    background: #fff;
-    padding: 2vh 1vw;
+  position: absolute;
+  left: 12px;
+  right: 12px;
+    margin: 1vh;
+  top: 56px;            
+  bottom: 12px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 2vh 1vw;
+  box-shadow: inset 0 0 0 2px #dfeac9; 
+  overflow: hidden;       
 }
 
 .status-content ul {
@@ -154,13 +187,24 @@ body {
     font-size: 1.8vw;
     margin-bottom: 0.6vh;
 }
+.status-board .status-title,#pickup-title {
+  position: absolute;
+  left: 36px;
+  margin-top: 1vh;
+  background: transparent;
+  color: #f6f0dc;
+  font-weight: 800;
+  font-size: 2vw;        
+  line-height: 1;
+  padding: 0;
+  min-width: 0;
+  display: inline-block;
+}
 
 .processing-title {
     font-weight: bold;
     font-size: 2vw;
     color: #333;
-    margin: 0;
-    margin-top: 5vh;
     padding: 0;
 }
 
@@ -217,7 +261,7 @@ body {
     transition: width 1.5s ease;
 }
 
-/* slideshow */
+/* Fullscreen slideshow */
 #slideshow {
     position: relative;
     width: 100%;

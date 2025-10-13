@@ -23,9 +23,51 @@
     </div>
 
     <div class="container" id="main-ui" style="display: none;">
+
+
+        <div class="footer">
+           
+            <div class="status-board">
+                <div class="status-title">OrderStatus</div>
+                <div class="status-content">
+                    <ul id="order-status-list"></ul>
+                </div>
+            </div>
+
+            <div class="status-board">
+                <div class="status-title">Processing</div>
+                <div class="status-content" id="processing-content">
+                    <div id="processing-container">
+                        <div id="processing"></div>
+
+                        <div class="progress-container">
+
+                            <div id="progress-icon-container">
+                                <img id="progress-icon" src="{{ url_for('static', filename='images/loading.gif') }}"
+                                    alt="progress">
+                            </div>
+                            <div class="progress-text-container">
+                                <div id="progress-info">
+                                    <span id="progress-text">0%</span>
+                                    <span id="progress-status">Brewing</span>
+                                </div>
+
+                                <div id="progress-bar-container">
+                                    <div id="progress-bar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+ <div class="img-container">
+                <img id="footer-img" src="{{ url_for('static', filename='images/ic_catlogo.png') }}" alt="Logo"
+                    class="logo">
+            </div>
+        </div>
         <div class="pickup-board">
             <div class="status-title" id="pickup-title">
-                Pick<br>Up
+                Pick-Up
             </div>
 
             <div class="pickup-grid">
@@ -83,48 +125,6 @@
             </div>
 
         </div>
-
-        <div class="footer">
-            <div class="img-container">
-                <img id="footer-img" src="{{ url_for('static', filename='images/ic_catlogo.png') }}" alt="Logo"
-                    class="logo">
-            </div>
-            <div class="status-board">
-                <div class="status-title">Order<br>Status</div>
-                <div class="status-content">
-                    <ul id="order-status-list"></ul>
-                </div>
-            </div>
-
-            <div class="status-board">
-                <div class="status-title">Processing</div>
-                <div class="status-content" id="processing-content">
-                    <div id="processing-container">
-                        <div id="processing"></div>
-
-                        <div class="progress-container">
-
-                            <div id="progress-icon-container">
-                                <img id="progress-icon" src="{{ url_for('static', filename='images/loading.gif') }}"
-                                    alt="progress">
-                            </div>
-                            <div class="progress-text-container">
-                                <div id="progress-info">
-                                    <span id="progress-text">0%</span>
-                                    <span id="progress-status">Brewing</span>
-                                </div>
-
-                                <div id="progress-bar-container">
-                                    <div id="progress-bar"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
     </div>
     </div>
 </body>

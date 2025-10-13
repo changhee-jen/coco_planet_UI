@@ -41,46 +41,40 @@ function fetchStatus() {
 }
 
 
-
 function updateProcessing(processingList) {
-    const container = document.getElementById("processing-content");
-    container.innerHTML = "";
+  const container = document.getElementById("processing-content");
+  if (!container) return;
 
-    if (!processingList || processingList.length === 0) {
-        return;
-    }
+  container.innerHTML = "";
 
+  if (!Array.isArray(processingList) || processingList.length === 0) {
+    container.style.display = "none";
+    return;
+  }
+  container.style.display = "";
 
-    processingList.slice(0, 2).forEach(proc => {
-        const wrapper = document.createElement("div");
-        wrapper.classList.add("processing-container");
-        if (!processingList || processingList.length === 0) {
-            container.style.display = "none";
-            return;
-        }
-        wrapper.innerHTML = `
-            <div class="processing-title" style="margin-top:15px;">#${proc.order_no} - ${proc.menu}</div>
-            <div class="progress-container">
-                <div id="progress-icon-container">
-                    <img id="progress-icon" src="/static/images/${proc.progress >= 100 ? "ic_completed.png" : "loading.gif"}" 
-                         alt="progress">
-                </div>
-                <div class="progress-text-container">
-                    <div id="progress-info">
-                        <span id="progress-text">${proc.progress}%</span>
-                        <span id="progress-status">${proc.progress >= 100 ? "Completed" : "Brewing"}</span>
-                    </div>
-                    <div id="progress-bar-container">
-                        <div id="progress-bar" class="progress-bar" style="width:${proc.progress}%;"></div>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        container.appendChild(wrapper);
-    });
+  processingList.slice(0, 1).forEach(proc => {
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("processing-container");
+    wrapper.innerHTML = `
+      <div class="processing-title">#${proc.order_no} - ${proc.menu}</div>
+      <div class="progress-container">
+        <div id="progress-icon-container">
+          <img id="progress-icon" src="/static/images/${proc.progress >= 100 ? "ic_completed.png" : "loading.gif"}" alt="progress">
+        </div>
+        <div class="progress-text-container">
+          <div id="progress-info">
+            <span id="progress-text">${proc.progress}%</span>
+            <span id="progress-status">${proc.progress >= 100 ? "Completed" : "Brewing"}</span>
+          </div>
+          <div id="progress-bar-container">
+            <div id="progress-bar" class="progress-bar" style="width:${proc.progress}%;"></div>
+          </div>
+        </div>
+      </div>`;
+    container.appendChild(wrapper);
+  });
 }
-
 
 // ===== Order Status =====
 function updateOrderStatus(orderStatus) {
@@ -100,22 +94,25 @@ function updateOrderStatus(orderStatus) {
     }
 }
 
-
 function renderPickup(pickupList) {
     console.log("Rendering pickup list:", pickupList);
+
+    // 모든 셀 초기화
     for (let i = 1; i <= 16; i++) {
         const cell = document.getElementById(`pick-${i}`);
-        if (cell) cell.innerHTML = "";
+        if (cell) {
+            cell.innerHTML = "";
+            cell.classList.remove("active"); // 이전 색상 제거
+        }
     }
 
     pickupList.forEach(item => {
         const cell = document.getElementById(`pick-${item.pick}`);
         if (cell) {
             let icon = "ic_cup.png";
-            if (item.menu && item.menu.trim().toLowerCase() === "Milk Ice Cream") {
+            if (item.menu && item.menu.trim().toLowerCase() === "milk ice cream") {
                 icon = "ic_icecream.png";
             }
-
 
             cell.innerHTML = `
                 <div class="pickup-card">
@@ -126,6 +123,8 @@ function renderPickup(pickupList) {
                     </div>
                 </div>
             `;
+
+            cell.classList.add("active"); 
         }
     });
 }
