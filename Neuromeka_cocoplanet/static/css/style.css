@@ -29,7 +29,7 @@ body {
   position: absolute;
   inset: 8px;
   border-radius: 20px;
-  border: 2px solid #dfeac9;    
+  border: 4px solid #dfeac9;    
   pointer-events: none;
 }
 
@@ -59,7 +59,7 @@ body {
 /* === 카드 셀(td) === */
 .pickup-item td {
   background-color: #f4f8f1;  
-  border-radius: 14px;
+  border-radius: 18px;
   width: 10vw;
   height: 22vh;
   padding-top: 30px;
@@ -132,7 +132,7 @@ body {
   position: relative;
  width: 37vw; height: 30vh;
   border: none;               
-  border-radius: 16px;
+  border-radius: 18px;
   background: #6f8f4a;        
   padding: 12px;     
           
@@ -143,8 +143,8 @@ body {
   content: "";
   position: absolute;
   inset: 8px;
-  border-radius: 12px;
-  border: 2px solid #dfeac9;
+  border-radius: 18px;
+  border: 4px solid #dfeac9;
   pointer-events: none;
 }
 #pickup-title {
@@ -173,7 +173,7 @@ body {
   top: 56px;            
   bottom: 12px;
   background: #fff;
-  border-radius: 12px;
+  border-radius: 18px;
   padding: 2vh 1vw;
   box-shadow: inset 0 0 0 2px #dfeac9; 
   overflow: hidden;       
@@ -251,7 +251,7 @@ body {
     width: 15vw;
     height: 2vh;
     background: #c8e0c8;
-    border-radius: 1vh;
+    border-radius: 18px;
     overflow: hidden;
 }
 
@@ -259,7 +259,7 @@ body {
     height: 100%;
     width: 0%;
     background: #2e8b57;
-    border-radius: 1vh;
+    border-radius: 18px;
     transition: width 1.5s ease;
 }
 
